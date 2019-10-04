@@ -3,14 +3,14 @@
 }
 
 .card {
-  height: 182px;
-  width: 132px;
+  height:  31.488vmin;
+  width: 22.837vmin;
 }
 
 .card:hover {
 }
 
-H1{
+H1 {
 	font-size: 6vmin;
 }
 
