@@ -7,7 +7,7 @@
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js">
     </script>
   </head>
-  <body>=
+  <body>
 	<video autoplay muted loop id="background">
 	  <source src="background.mp4" type="video/mp4">
 	</video>
@@ -39,23 +39,15 @@ var flip = function(e){
 	$("#"+e.srcElement.id).wrap($("<a class='wrapper' target='_blank'>").attr("href", link_url));
 }
 
-function unwrap(wrapper) {
-	for (var i = 0; i < wrapper.length; i++){
-		var docFrag = document.createDocumentFragment();
-		while (wrapper[i].firstChild)
-			docFrag.appendChild(wrapper[i].firstChild);
-		wrapper[i].parentNode.replaceChild(docFrag, wrapper[i]);
-	}
-}
-
 function shuffle(){
     //window.location.reload(); 
 	for (var i = 0; i < card_class.length; i++){
 		card_class[i].addEventListener('click', flip, false);
 		//card_class[i].addEventListener('touchstart', flip, false);
 		card_class[i].src = "cover.jpg";
-    }
-	unwrap(document.getElementsByClassName("wrapper"));
+		if($("#"+card_class[i].id).parent().is( ".wrapper" ))
+			$("#"+card_class[i].id).unwrap();
+    } 
 }
 
 function getRandCard(){
