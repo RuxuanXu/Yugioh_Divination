@@ -3,12 +3,15 @@
 }
 
 .card {
-  border-radius: 5px 5px 0 0;
   height: 182px;
   width: 132px;
 }
 
 .card:hover {
+}
+
+H1{
+	font-size: 6vmin;
 }
 
 #background {
@@ -39,10 +42,10 @@
 
 #status {
 	color: white !important;
-	font-size: 20px;
+	font-size: 4vmin;
 	text-decoration: none;
 	background: transparent;
-	padding: 10px;
+	padding: 1.5vmin;
 	border: 2px solid white !important;
 	display: inline-block;
 	transition: all 0.4s ease 0s;
