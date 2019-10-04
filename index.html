@@ -14,17 +14,21 @@
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js">
     </script>
   </head>
-  <body>
-    <center>
-      <h3>遊☆戲☆王☆占☆卜</h3>
-	  <p id="status">卡片資料讀取中...請稍候...</p>
-	  <input type="image" class="card" id="card01" src="cover.jpg"/>
-	  <input type="image" class="card" id="card02" src="cover.jpg"/>
-	  <input type="image" class="card" id="card03" src="cover.jpg"/>
-	  <input type="image" class="card" id="card04" src="cover.jpg"/>
-	  <input type="image" class="card" id="card05" src="cover.jpg"/>
+  <body>=
+	<video autoplay muted loop id="background">
+	  <source src="background.mp4" type="video/mp4">
+	</video>
+    <center class="foreground">
+      <H1>遊☆戲☆王☆占☆卜</H1>
+	  <div class="scroll">
+		  <input type="image" class="card" id="card01" src="cover.jpg"/>
+		  <input type="image" class="card" id="card02" src="cover.jpg"/>
+		  <input type="image" class="card" id="card03" src="cover.jpg"/>
+		  <input type="image" class="card" id="card04" src="cover.jpg"/>
+		  <input type="image" class="card" id="card05" src="cover.jpg"/>
+	  </div>
 	  <br><br>
-	  <button onclick="shuffle()">重新洗牌</button>
+	  <button id="status" onclick="">卡片資料載入中...</button>
     </center>
   </body>
   
@@ -35,11 +39,18 @@ var card_class = document.getElementsByClassName("card");
 var flip = function(e){
 	if(!card_dict)return;
 	var rand_card = getRandCard();
-	e.target.src = rand_card;
+	e.target.src = rand_card[0];
 	e.target.removeEventListener('click', flip, false);
 	//e.target.removeEventListener('touchstart', flip, false);
-	//var link_url = rand_card[2];
-	//$("#"+e.srcElement.id).wrap($("<a target='_blank'>").attr("href", link_url));
+	var link_url = rand_card[1];
+	$("#"+e.srcElement.id).wrap($("<a class='wrapper' target='_blank'>").attr("href", link_url));
+}
+
+function unwrap(wrapper) {
+    var docFrag = document.createDocumentFragment();
+    while (wrapper.firstChild)
+        docFrag.appendChild(wrapper.firstChild);
+    wrapper.parentNode.replaceChild(docFrag, wrapper);
 }
 
 function shuffle(){
@@ -49,6 +60,8 @@ function shuffle(){
 		//card_class[i].addEventListener('touchstart', flip, false);
 		card_class[i].src = "cover.jpg";
     }
+	unwrap(document.querySelector('.wrapper'));
+	
 }
 
 function getRandCard(){
@@ -58,7 +71,8 @@ function getRandCard(){
 		return getRandCard();
 	var rand_img = Math.floor(Math.random() * card_dict[rand_num].card_images.length);
 	var src = card_dict[rand_num].card_images[rand_img].image_url; 
-	return src;
+	var url = "https://asia.xpg.cards/card?id=" + card_dict[rand_num].id;
+	return [src, url];
 }
 
 function getCards(url){
@@ -66,7 +80,8 @@ function getCards(url){
     request.open('GET', 'https://db.ygoprodeck.com/api/v5/cardinfo.php', true)
     request.onload = function() {
 		card_dict = JSON.parse(this.response);
-		document.getElementById("status").innerHTML = "";
+		document.getElementById("status").innerHTML = "重新抽牌";
+		document.getElementById("status").onclick = shuffle;
 	}
 	request.send()
 }
