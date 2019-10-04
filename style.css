@@ -34,12 +34,6 @@ H1{
   transform: translate(-50%,-50%);
 }
 
-.scroll {
-  background-color: transparent;
-  overflow: auto;
-  white-space: nowrap;
-}
-
 #status {
 	color: white !important;
 	font-size: 4vmin;
