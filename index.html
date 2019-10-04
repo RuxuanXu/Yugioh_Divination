@@ -40,10 +40,12 @@ var flip = function(e){
 }
 
 function unwrap(wrapper) {
-    var docFrag = document.createDocumentFragment();
-    while (wrapper.firstChild)
-        docFrag.appendChild(wrapper.firstChild);
-    wrapper.parentNode.replaceChild(docFrag, wrapper);
+	for (var i = 0; i < wrapper.length; i++){
+		var docFrag = document.createDocumentFragment();
+		while (wrapper[i].firstChild)
+			docFrag.appendChild(wrapper[i].firstChild);
+		wrapper[i].parentNode.replaceChild(docFrag, wrapper[i]);
+	}
 }
 
 function shuffle(){
@@ -53,8 +55,7 @@ function shuffle(){
 		//card_class[i].addEventListener('touchstart', flip, false);
 		card_class[i].src = "cover.jpg";
     }
-	unwrap(document.querySelector('.wrapper'));
-	
+	unwrap(document.getElementsByClassName("wrapper"));
 }
 
 function getRandCard(){
