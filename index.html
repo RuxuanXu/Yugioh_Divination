@@ -1,0 +1,83 @@
+<!DOCTYPE HTML>
+<html>
+  <head>
+  <system.webServer>
+  <httpProtocol>
+    <customHeaders>
+      <add name="Access-Control-Allow-Origin" value="*"/>
+    </customHeaders>
+  </httpProtocol>
+</system.webServer>
+    <meta charset="UTF-8" />
+    <title>遊☆戲☆王☆占☆卜</title>
+	<link id="style" rel="stylesheet" href="style.css"/>
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js">
+    </script>
+  </head>
+  <body>
+    <center>
+      <h3>遊☆戲☆王☆占☆卜</h3>
+	  <p id="status">卡片資料讀取中...請稍候...</p>
+	  <input type="image" class="card" id="card01" src="cover.jpg"/>
+	  <input type="image" class="card" id="card02" src="cover.jpg"/>
+	  <input type="image" class="card" id="card03" src="cover.jpg"/>
+	  <input type="image" class="card" id="card04" src="cover.jpg"/>
+	  <input type="image" class="card" id="card05" src="cover.jpg"/>
+	  <br><br>
+	  <button onclick="shuffle()">重新洗牌</button>
+    </center>
+  </body>
+  
+<script>
+var card_dict = "";
+var card_class = document.getElementsByClassName("card");
+
+var flip = function(e){
+	if(!card_dict)return;
+	var rand_card = getRandCard();
+	e.target.src = rand_card;
+	e.target.removeEventListener('click', flip, false);
+	//e.target.removeEventListener('touchstart', flip, false);
+	//var link_url = rand_card[2];
+	//$("#"+e.srcElement.id).wrap($("<a target='_blank'>").attr("href", link_url));
+}
+
+function shuffle(){
+    //window.location.reload(); 
+	for (var i = 0; i < card_class.length; i++){
+		card_class[i].addEventListener('click', flip, false);
+		//card_class[i].addEventListener('touchstart', flip, false);
+		card_class[i].src = "cover.jpg";
+    }
+}
+
+function getRandCard(){
+	var card_num = 5;
+	var rand_num = Math.floor(Math.random() * card_dict.length);
+	if(!card_dict[rand_num].card_images) 
+		return getRandCard();
+	var rand_img = Math.floor(Math.random() * card_dict[rand_num].card_images.length);
+	var src = card_dict[rand_num].card_images[rand_img].image_url; 
+	return src;
+}
+
+function getCards(url){
+    var request = new XMLHttpRequest();
+    request.open('GET', 'https://db.ygoprodeck.com/api/v5/cardinfo.php', true)
+    request.onload = function() {
+		card_dict = JSON.parse(this.response);
+		document.getElementById("status").innerHTML = "";
+	}
+	request.send()
+}
+
+getCards();
+
+for (var i = 0; i < card_class.length; i++){
+    card_class[i].addEventListener('click', flip, false);
+    //card_class[i].addEventListener('touchstart', flip, false);
+}
+
+</script>
+
+</html>
