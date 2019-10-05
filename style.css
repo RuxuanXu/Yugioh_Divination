@@ -29,9 +29,8 @@ H1 {
   margin: 0;
   position: absolute;
   top: 50%;
-  left: 50%;
-  -ms-transform: translate(-50%,-50%);
-  transform: translate(-50%,-50%);
+  -ms-transform: translate(0%,-50%);
+  transform: translate(0%,-50%);
 }
 
 #status {
@@ -43,4 +42,8 @@ H1 {
 	border: 2px solid white !important;
 	display: inline-block;
 	transition: all 0.4s ease 0s;
+}
+
+li {
+  display: inline-block;
 }
