@@ -90,7 +90,7 @@ function initialize() {
 
 function update() {
 	$('.scroll').css('width', $(window).innerWidth());
-	if($('#card01').width()*5 + 20 < $('.foreground').width())
+	if($('#card01').width()*5 + 20 < $(window).innerWidth())
 		$('#new_line').hide();
 	else
 		$('#new_line').show();
