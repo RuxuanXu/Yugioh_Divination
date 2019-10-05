@@ -36,6 +36,7 @@ var flip = function(e){
     var preload_img = new Image();
     preload_img.src = rand_card[0];
     document.getElementById("status").innerHTML = "抽牌中...";
+	$("#"+e.srcElement.id).addClass("card_reveal");
     preload_img.onload = function() {
         e.target.src = preload_img.src;
         document.getElementById("status").innerHTML = "重新洗牌";
@@ -54,6 +55,7 @@ function shuffle(){
 		card_class[i].addEventListener('click', flip, false);
 		//card_class[i].addEventListener('touchstart', flip, false);
 		card_class[i].src = "cover.jpg";
+		$("#"+card_class[i].id).removeClass("card_reveal");
 		if($("#"+card_class[i].id).parent().is( ".wrapper" ))
 			$("#"+card_class[i].id).unwrap();
     } 

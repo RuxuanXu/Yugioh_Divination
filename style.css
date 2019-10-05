@@ -52,15 +52,36 @@ li {
 .card {
   height:  31.488vmin;
   width: 22.837vmin;
-  transform: rotateX(60deg) scale(1); 
+  transform: rotateX(60deg) scale(0.8); 
   transition: .5s all ease;
   z-index: 1;
   position:relative;
 }
 
 .card:hover, .card:active{
+  transform:rotateX(60deg) translateY(10%) scale(0.8);
+  transition: opacity 1s;
+  height:  31.488vmin;
+  width: 22.837vmin;
+  transition: .5s all ease;
+  z-index: 1;
+  position:relative;
+}
+
+.card_reveal {
+  height:  31.488vmin;
+  width: 22.837vmin;
+  transform: rotateX(60deg) scale(0.8); 
+  transition: .5s all ease;
+  z-index: 1;
+  position:relative;
+}
+
+.card_reveal:hover, .card_reveal:active{
+  height:  31.488vmin;
+  width: 22.837vmin;
   cursor: pointer;
-  transform: rotate(0deg) scale(1.2);
+  transform: rotate(0deg) scale(1);
   transition: .5s all ease;
   z-index: 10;
   position:relative;
