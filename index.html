@@ -3,6 +3,8 @@
   <head>
     <meta charset="UTF-8" />
 	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
     <title>遊☆戲☆王☆占☆卜</title>
 	<link id="style" rel="stylesheet" href="style.css?rnd=132"/>
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js">
@@ -15,13 +17,13 @@
     <center class="foreground">
       <H1>遊☆戲☆王☆占☆卜</H1>
 	  <div class="scroll">
-		  <li><input type="image" class="card" id="card01" src="cover.jpg"/><p>運勢</p></li>
-		  <li><input type="image" class="card" id="card02" src="cover.jpg"/><p>事業</p></li>
-		  <li><input type="image" class="card" id="card03" src="cover.jpg"/><p>愛情</p></li><br id="new_line">
-		  <li><input type="image" class="card" id="card04" src="cover.jpg"/><p>人際</p></li>
-		  <li><input type="image" class="card" id="card05" src="cover.jpg"/><p>財運</p></li>
+		  <li><input type="image" class="card shuffle" id="card01" src="cover.jpg"/><p>運勢</p></li>
+		  <li><input type="image" class="card shuffle" id="card02" src="cover.jpg"/><p>事業</p></li>
+		  <li><input type="image" class="card shuffle" id="card03" src="cover.jpg"/><p>愛情</p></li><br id="new_line">
+		  <li><input type="image" class="card shuffle" id="card04" src="cover.jpg"/><p>人際</p></li>
+		  <li><input type="image" class="card shuffle" id="card05" src="cover.jpg"/><p>財運</p></li>
 	  </div>
-	  <button id="status" onclick="">卡片資料載入中...</button><br><br>
+	  <button id="status" class="loading" onclick="">卡片資料載入中  <i class="fa fa-spinner fa-spin"></i></button><br><br>
     </center>
 	
   </body>
@@ -35,7 +37,7 @@ var flip = function(e){
 	var rand_card = getRandCard();
     var preload_img = new Image();
     preload_img.src = rand_card[0];
-    document.getElementById("status").innerHTML = "抽牌中...";
+    document.getElementById("status").innerHTML = "抽牌中  <i class='fa fa-spinner fa-spin'></i>";
 	$("#"+e.srcElement.id).addClass("card_reveal");
 	$("#"+e.srcElement.id).addClass("rotate");
     preload_img.onload = function() {
@@ -51,16 +53,33 @@ var flip = function(e){
 	$("#"+e.srcElement.id).wrap($("<a class='wrapper' target='_blank'>").attr("href", link_url));
 }
 
+var delay = ( function() {
+    var timer = 0;
+    return function(callback, ms) {
+        clearTimeout (timer);
+        timer = setTimeout(callback, ms);
+    };
+})();
+
 function shuffle(){
     //window.location.reload(); 
-	for (var i = 0; i < card_class.length; i++){
-		card_class[i].addEventListener('click', flip, false);
-		//card_class[i].addEventListener('touchstart', flip, false);
-		card_class[i].src = "cover.jpg";
-		$("#"+card_class[i].id).removeClass("card_reveal");
-		if($("#"+card_class[i].id).parent().is( ".wrapper" ))
-			$("#"+card_class[i].id).unwrap();
-    } 
+	for (var i = 0; i < card_class.length; i++)
+		$("#"+card_class[i].id).addClass("shuffle");
+	delay(function(){
+		for (var i = 0; i < card_class.length; i++){
+			card_class[i].addEventListener('click', flip, false);
+			//card_class[i].addEventListener('touchstart', flip, false);
+			card_class[i].src = "cover.jpg";
+			$("#"+card_class[i].id).removeClass("card_reveal");
+		} 
+	    for (var i = 0; i < card_class.length; i++)
+			$("#"+card_class[i].id).removeClass("shuffle");
+		delay(function(){
+			for (var i = 0; i < card_class.length; i++)
+				if($("#"+card_class[i].id).parent().is( ".wrapper" ))
+					$("#"+card_class[i].id).unwrap();
+		}, 500 );
+	}, 500 );
 }
 
 function getRandCard(){
@@ -87,10 +106,13 @@ function getCards(url){
 
 function initialize() {
 	getCards();
-	for (var i = 0; i < card_class.length; i++){
+	for (var i = 0; i < card_class.length; i++)
 		card_class[i].addEventListener('click', flip, false);
-		//card_class[i].addEventListener('touchstart', flip, false);
-	}
+	delay(function(){
+		for (var i = 0; i < card_class.length; i++)
+			$("#"+card_class[i].id).removeClass("shuffle");
+		
+	}, 500 );
 }
 
 function update() {

@@ -29,18 +29,27 @@ H1 {
 }
 
 #status {
-	color: white !important;
+	color: white;
 	font-size: 4vmin;
 	text-decoration: none;
 	background: transparent;
 	padding: 1.5vmin;
-	border: 2px solid white !important;
+	border: 0.2vmin solid transparent;
 	display: inline-block;
-	transition: all 0.4s ease 0s;
+	transition: .5s all ease;
+	opacity: 0.8;
+	z-index: -10;
 }
 
 #status:hover {
     cursor: pointer;
+	border: 0.2vmin solid #DCDCDC;
+	transition: .5s all ease;
+	opacity: 1;
+}
+
+.loading {
+   stroke-dashoffset: -480;
 }
 
 li {
@@ -57,9 +66,11 @@ li {
 }
 
 p {
-	margin-top: -6.2vmin;
+	margin-top: -6.8vmin;
 	font-size: 4vmin;
 	transform: rotateX(60deg); 
+	opacity: 0.8;
+    transition: .5s all ease;
 }
 
 .card:hover {
@@ -101,7 +112,18 @@ p {
   to{ transform: rotateY(360deg) scale(1.5);  }
 }
 
+.shuffle{
+  overflow: clip;
+  height:  31.488vmin;
+  width: 22.837vmin;
+  transform: rotateX(60deg) translateY(-50%) scale(0.9); 
+  transition: .5s all ease;
+  position:relative;
+  opacity: 0;
+}
+
 .scroll {
   perspective: 900px;
+  transition: .5s all ease;
 }
 
