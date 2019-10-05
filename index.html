@@ -18,6 +18,7 @@
 		  <input type="image" class="card" id="card01" src="cover.jpg"/>
 		  <input type="image" class="card" id="card02" src="cover.jpg"/>
 		  <input type="image" class="card" id="card03" src="cover.jpg"/>
+          <br>
 		  <input type="image" class="card" id="card04" src="cover.jpg"/>
 		  <input type="image" class="card" id="card05" src="cover.jpg"/>
 	  </div>
@@ -33,7 +34,15 @@ var card_class = document.getElementsByClassName("card");
 var flip = function(e){
 	if(!card_dict)return;
 	var rand_card = getRandCard();
-	e.target.src = rand_card[0];
+    var preload_img = new Image();
+    preload_img.src = rand_card[0];
+    document.getElementById("status").innerHTML = "抽牌中...";
+    preload_img.onload = function() {
+        e.target.src = preload_img.src;
+        document.getElementById("status").innerHTML = "重新洗牌";
+    }
+    //$("#"+e.srcElement.id).attr("src",rand_card[0]);
+    
 	e.target.removeEventListener('click', flip, false);
 	//e.target.removeEventListener('touchstart', flip, false);
 	var link_url = rand_card[1];
@@ -67,7 +76,7 @@ function getCards(url){
     request.open('GET', 'https://db.ygoprodeck.com/api/v5/cardinfo.php', true)
     request.onload = function() {
 		card_dict = JSON.parse(this.response);
-		document.getElementById("status").innerHTML = "重新抽牌";
+		document.getElementById("status").innerHTML = "重新洗牌";
 		document.getElementById("status").onclick = shuffle;
 	}
 	request.send()
