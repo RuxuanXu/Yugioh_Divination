@@ -17,11 +17,11 @@
 	  <div class="scroll">
 		  <li><input type="image" class="card" id="card01" src="cover.jpg"/><p>運勢</p></li>
 		  <li><input type="image" class="card" id="card02" src="cover.jpg"/><p>事業</p></li>
-		  <li><input type="image" class="card" id="card03" src="cover.jpg"/><p>愛情</p></li><br>
+		  <li><input type="image" class="card" id="card03" src="cover.jpg"/><p>愛情</p></li><br id="new_line">
 		  <li><input type="image" class="card" id="card04" src="cover.jpg"/><p>人際</p></li>
 		  <li><input type="image" class="card" id="card05" src="cover.jpg"/><p>財運</p></li>
 	  </div>
-	  <button id="status" onclick="">卡片資料載入中...</button>
+	  <button id="status" onclick="">卡片資料載入中...</button><br><br>
     </center>
   </body>
   
@@ -80,14 +80,24 @@ function getCards(url){
 	request.send()
 }
 
-getCards();
-
-for (var i = 0; i < card_class.length; i++){
-    card_class[i].addEventListener('click', flip, false);
-    //card_class[i].addEventListener('touchstart', flip, false);
+function initialize() {
+	getCards();
+	for (var i = 0; i < card_class.length; i++){
+		card_class[i].addEventListener('click', flip, false);
+		//card_class[i].addEventListener('touchstart', flip, false);
+	}
 }
 
-$('.scroll').css('width', $(window).width());
+function update() {
+	$('.scroll').css('width', $(window).innerWidth());
+	if($('#card01').width()*5 + 20 < $('.foreground').width())
+		$('#new_line').hide();
+	else
+		$('#new_line').show();
+}
+
+initialize();
+setInterval(update, 100);
 
 </script>
 
