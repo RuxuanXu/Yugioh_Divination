@@ -37,7 +37,9 @@ var flip = function(e){
     preload_img.src = rand_card[0];
     document.getElementById("status").innerHTML = "抽牌中...";
 	$("#"+e.srcElement.id).addClass("card_reveal");
+	$("#"+e.srcElement.id).addClass("rotate");
     preload_img.onload = function() {
+	    $("#"+e.srcElement.id).removeClass("rotate");
         e.target.src = preload_img.src;
         document.getElementById("status").innerHTML = "重新洗牌";
     }
