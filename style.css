@@ -1,8 +1,6 @@
 *{
 	overflow-x: clip;
 	font-family:Microsoft JhengHei;
-	-webkit-user-select: none; 
-	-moz-user-select: none;
 }
 
 H1 {
@@ -16,6 +14,8 @@ H1 {
     transform: translate(-50%,0);
     white-space: nowrap;
     text-overflow: ellipsis;
+	-webkit-user-select: none; 
+	-moz-user-select: none;
 }
 
 br {
@@ -32,6 +32,8 @@ br {
   min-height: 100%;
   opacity: 1;
   z-index: -10;
+  -webkit-user-select: none; 
+  -moz-user-select: none;
 }
 
 .foreground {
@@ -43,6 +45,8 @@ br {
   left: 50%;
   -ms-transform: translate(-50%,-50%);
   transform: translate(-50%,-50%);
+  -webkit-user-select: none; 
+  -moz-user-select: none;
 }
 
 #camera {
