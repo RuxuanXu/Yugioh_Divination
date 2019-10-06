@@ -1,10 +1,24 @@
 *{
 	overflow-x: clip;
 	font-family:Microsoft JhengHei;
+	-webkit-user-select: none; 
+	-moz-user-select: none;
 }
 
 H1 {
 	font-size: 6vmin;
+	position: absolute;
+    top: 0vmin;
+    left: 50%;
+	color: white;
+	opacity: 1;
+	-ms-transform: translate(-50%,0);
+    transform: translate(-50%,0);
+}
+
+br {
+   display: block;
+   margin: 0 .5vmin;
 }
 
 #background {
@@ -15,6 +29,7 @@ H1 {
   min-width: 100%;
   min-height: 100%;
   opacity: 1;
+  z-index: -10;
 }
 
 .foreground {
@@ -28,6 +43,37 @@ H1 {
   transform: translate(-50%,-50%);
 }
 
+#camera {
+    display:block;
+    height: 6.8vmin;
+    width: 6.8vmin;
+	color: white;
+	font-size: 3.6vmin;
+	background: transparent;
+	border: 0.2vmin solid white;
+	opacity: 0.5;
+	border-radius: 50%;
+	position: relative;
+    top: -4vmin;
+	transition: 1s all ease;
+}
+
+#camera:hover {
+    cursor: pointer;
+	opacity: 1;
+	transition: .5s all ease;
+	
+}
+
+.hidden {
+	opacity: 0 !important;
+	transition: .5s all ease;
+}
+
+.hidden {
+	cursor: default !important;
+}
+
 #status {
 	color: white;
 	font-size: 4vmin;
@@ -39,13 +85,38 @@ H1 {
 	transition: .5s all ease;
 	opacity: 0.8;
 	z-index: -10;
+	position: absolute;
+	bottom:4vmin;
+    left: 50%;
+    -ms-transform: translate(-50%,0);
+    transform: translate(-50%,0);
 }
 
 #status:hover {
-    cursor: pointer;
-	border: 0.2vmin solid #DCDCDC;
 	transition: .5s all ease;
 	opacity: 1;
+}
+
+.clickable {
+	border: 0.2vmin solid #DCDCDC !important;
+}
+
+.clickable:hover {
+    cursor: pointer;
+	border: 0.2vmin solid #DCDCDC !important;
+}
+
+
+#menu {
+	color: white;
+	font-size: 4vmin;
+	text-decoration: none;
+	background: transparent;
+	padding: 1.5vmin;
+	border: none;
+	display: inline-block;
+	transition: .5s all ease;
+	opacity: 0.8;
 }
 
 .loading {
@@ -65,8 +136,8 @@ li {
   position:relative;
 }
 
-p {
-	margin-top: -6.8vmin;
+.desc {
+	margin-top: -8vmin;
 	font-size: 4vmin;
 	transform: rotateX(60deg); 
 	opacity: 0.8;
@@ -122,8 +193,47 @@ p {
   opacity: 0;
 }
 
-.scroll {
+.card_set{
   perspective: 900px;
+  transform: translateY(-4vmin); 
   transition: .5s all ease;
+}
+
+#container {
+	display: inline-block
+	overflow-x: clip;
+	width: 103.8062vmin;
+	height: 83.045vmin;
+	position: absolute;
+	top: 50%;
+	left: 50%;
+	-ms-transform: translate(-50%,-50%);
+	transform: translate(-50%,-50%);
+	max-width: 100%;
+	max-height: 100%;
+}
+
+#canvas {
+	overflow-x: clip;
+	max-width: 100%;
+	max-height: 100%;
+}
+
+#back_btn {
+	overflow-x: clip;
+	display:block;
+    height: 6.8vmin;
+    width: 6.8vmin;
+	color: white;
+	font-size: 4.8vmin;
+	background: transparent;
+	border: transparent;
+	position: absolute;
+	top: 0;
+	right: 0;
+}
+
+#back_btn:hover {
+    cursor: pointer;
 }
 

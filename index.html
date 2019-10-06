@@ -14,18 +14,18 @@
 	<video autoplay muted loop id="background">
 	  <source src="background.mp4" type="video/mp4">
 	</video>
+    <H1>遊☆戲☆王☆占☆卜</H1>
     <center class="foreground">
-      <H1>遊☆戲☆王☆占☆卜</H1>
-	  <div class="scroll">
-		  <li><input type="image" class="card shuffle" id="card01" src="cover.jpg"/><p>運勢</p></li>
-		  <li><input type="image" class="card shuffle" id="card02" src="cover.jpg"/><p>事業</p></li>
-		  <li><input type="image" class="card shuffle" id="card03" src="cover.jpg"/><p>愛情</p></li><br id="new_line">
-		  <li><input type="image" class="card shuffle" id="card04" src="cover.jpg"/><p>人際</p></li>
-		  <li><input type="image" class="card shuffle" id="card05" src="cover.jpg"/><p>財運</p></li>
+	    <button id="camera" class="icon hidden"><i class="fa fa-camera" aria-hidden="true"></i></button>
+	  <div class="card_set">
+		  <li><input type="image" class="card shuffle" id="01" src="cover.jpg"/><div class="desc">運勢</div></li>
+		  <li><input type="image" class="card shuffle" id="02" src="cover.jpg"/><div class="desc">事業</div></li>
+		  <li><input type="image" class="card shuffle" id="03" src="cover.jpg"/><div class="desc">愛情</div></li><br id="new_line">
+		  <li><input type="image" class="card shuffle" id="04" src="cover.jpg"/><div class="desc">人際</div></li>
+		  <li><input type="image" class="card shuffle" id="05" src="cover.jpg"/><div class="desc">金錢</div></li>
 	  </div>
-	  <button id="status" class="loading" onclick="">卡片資料載入中  <i class="fa fa-spinner fa-spin"></i></button><br><br>
     </center>
-	
+	<button id="status" class="loading" onclick="">卡片資料載入中  <i class="fa fa-spinner fa-spin"></i></button>
   </body>
   
 <script>
@@ -38,12 +38,14 @@ var flip = function(e){
     var preload_img = new Image();
     preload_img.src = rand_card[0];
     document.getElementById("status").innerHTML = "抽牌中  <i class='fa fa-spinner fa-spin'></i>";
+	$("#status").removeClass("clickable");
 	$("#"+e.srcElement.id).addClass("card_reveal");
 	$("#"+e.srcElement.id).addClass("rotate");
     preload_img.onload = function() {
 	    $("#"+e.srcElement.id).removeClass("rotate");
         e.target.src = preload_img.src;
         document.getElementById("status").innerHTML = "重新洗牌";
+		$("#status").addClass("clickable");
     }
     //$("#"+e.srcElement.id).attr("src",rand_card[0]);
     
@@ -63,15 +65,19 @@ var delay = ( function() {
 
 function shuffle(){
     //window.location.reload(); 
+	if(document.getElementById("status").innerHTML == "抽牌階段") return;
+    document.getElementById("status").innerHTML = "抽牌階段";
+	$("#status").removeClass("clickable");
 	for (var i = 0; i < card_class.length; i++)
 		$("#"+card_class[i].id).addClass("shuffle");
 	delay(function(){
 		for (var i = 0; i < card_class.length; i++){
 			card_class[i].addEventListener('click', flip, false);
-			//card_class[i].addEventListener('touchstart', flip, false);
 			card_class[i].src = "cover.jpg";
 			$("#"+card_class[i].id).removeClass("card_reveal");
 		} 
+	    $('#camera').addClass("hidden");
+	    document.getElementById('camera').removeEventListener('click', takePicture, false);
 	    for (var i = 0; i < card_class.length; i++)
 			$("#"+card_class[i].id).removeClass("shuffle");
 		delay(function(){
@@ -83,7 +89,6 @@ function shuffle(){
 }
 
 function getRandCard(){
-	var card_num = 5;
 	var rand_num = Math.floor(Math.random() * card_dict.length);
 	if(!card_dict[rand_num].card_images) 
 		return getRandCard();
@@ -98,10 +103,33 @@ function getCards(url){
     request.open('GET', 'https://db.ygoprodeck.com/api/v5/cardinfo.php', true)
     request.onload = function() {
 		card_dict = JSON.parse(this.response);
-		document.getElementById("status").innerHTML = "重新洗牌";
+		document.getElementById("status").innerHTML = "抽牌階段";
 		document.getElementById("status").onclick = shuffle;
 	}
 	request.send()
+}
+
+function takePicture(){
+    var container = document.createElement('div');
+	container.id = 'container';
+	document.body.appendChild(container);
+	
+	var canvas = document.createElement('canvas');
+	canvas.id = 'canvas';
+	canvas.width = 1200;
+	canvas.height = 960;
+	var ctx = canvas.getContext('2d');
+	ctx.fillStyle = '#000';
+	ctx.fillRect(0,0,canvas.width,canvas.height);
+	document.getElementById('container').appendChild(canvas);
+	
+	var button = document.createElement("button");
+    button.innerHTML = "<i class='fa fa-times' aria-hidden='true'></i>";
+	button.id = 'back_btn';
+    document.getElementById('container').appendChild(button);
+	button.addEventListener ("click", function() {
+		$('#container').remove();
+    });
 }
 
 function initialize() {
@@ -116,8 +144,13 @@ function initialize() {
 }
 
 function update() {
-	$('.scroll').css('width', $(window).innerWidth());
-	if($('#card01').width()*5 + 20 < $(window).innerWidth())
+    var reveal = document.getElementsByClassName('card_reveal');
+	if(reveal.length == 5) {
+		$('#camera').removeClass('hidden');
+		document.getElementById('camera').addEventListener('click', takePicture, false);
+	}
+	$('.card_set').css('width', $(window).innerWidth());
+	if($('#01').width()*5 + 20 < $(window).innerWidth())
 		$('#new_line').hide();
 	else
 		$('#new_line').show();
