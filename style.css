@@ -168,9 +168,13 @@ li {
   position:relative;
 }
 
+.card_reveal:hover .desc {
+   display:none;
+}
+
 .card_reveal:hover {
   cursor: pointer;
-  transform: rotate(0deg) scale(1.5);
+  transform: rotate(0deg) translateY(-15%) scale(1.5);
   transition: .5s all ease;
   z-index: 10;
   position:relative;
@@ -186,16 +190,16 @@ li {
 
 .rotate{
   animation: rotate 1s infinite; 
-  transform: scale(1.5);
+  transform: translateY(-15%) scale(1.5);
   position:relative;
   z-index: 10;
   color:transparent;
 }
 
 @keyframes rotate{
-  0% { transform: rotateX(0deg) rotateY(0deg) scale(1.5);  }
-  50% { transform: rotateX(0deg) rotateY(180deg) scale(1.5);  }
-  100% { transform: rotateX(0deg) rotateY(360deg) scale(1.5);  }
+  0% { transform: rotateX(0deg) rotateY(0deg) translateY(-15%) scale(1.5);  }
+  50% { transform: rotateX(0deg) rotateY(180deg) translateY(-15%) scale(1.5);  }
+  100% { transform: rotateX(0deg) rotateY(360deg) translateY(-15%) scale(1.5);  }
 }
 
 .shuffle{
