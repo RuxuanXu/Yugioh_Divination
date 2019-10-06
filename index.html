@@ -113,14 +113,42 @@ function takePicture(){
     var container = document.createElement('div');
 	container.id = 'container';
 	document.body.appendChild(container);
-	
 	var canvas = document.createElement('canvas');
 	canvas.id = 'canvas';
-	canvas.width = 1200;
-	canvas.height = 960;
+	canvas.width = 1080;
+	canvas.height = 1080;
 	var ctx = canvas.getContext('2d');
 	ctx.fillStyle = '#000';
 	ctx.fillRect(0,0,canvas.width,canvas.height);
+	
+	ctx.font = "bold 60px Microsoft JhengHei";
+	ctx.fillStyle = "white";
+	ctx.textAlign = "center";
+	ctx.fillText("遊☆戲☆王☆占☆卜", canvas.width/2, 130);
+	
+	var card = new Image();
+	var padding = 50,padding_y = 100, top = 30;
+	var card_x = 210.5,card_y = 307;
+	var desc = document.getElementsByClassName('desc');
+	ctx.font = "35px Microsoft JhengHei";
+	ctx.fillStyle = "white";
+	ctx.textAlign = "center";
+	
+	for (var i = 0; i < card_class.length; i++){
+	    card.src = card_class[i].src;
+		if(i<3) {
+			ctx.drawImage(card, (canvas.width-(card_x*3+padding*2))/2 + i*(card_x+padding), top + (canvas.height-card_y*2-padding_y)/2, card_x, card_y);
+			ctx.fillText(desc[i].innerHTML, card_x/2+(canvas.width-(card_x*3+padding*2))/2 + i*(card_x+padding), top + (canvas.height-card_y*2-padding_y)/2+card_y+50);
+		}else {
+			ctx.drawImage(card, (canvas.width-(card_x*2+padding))/2 + (i-3)*(card_x+padding), top + (canvas.height-card_y*2-padding_y)/2 + padding_y + card_y , card_x, card_y);
+			ctx.fillText(desc[i].innerHTML, card_x/2+(canvas.width-(card_x*2+padding))/2 + (i-3)*(card_x+padding), top + (canvas.height-card_y*2-padding_y)/2 + padding_y +card_y*2+50);
+		}
+	}
+	ctx.font = "20px Microsoft JhengHei";
+	ctx.fillStyle = "#DCDCDC";
+	ctx.textAlign = "right";
+	ctx.fillText("ruxuanxu.github.io/Yugioh_Divination/", canvas.width-20, canvas.height-20);
+	
 	document.getElementById('container').appendChild(canvas);
 	
 	var button = document.createElement("button");
