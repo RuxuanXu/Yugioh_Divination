@@ -18,11 +18,11 @@
     <center class="foreground">
 	    <button id="camera" class="icon hidden"><i class="fa fa-camera" aria-hidden="true"></i></button>
 	  <div class="card_set">
-		  <li><input type="image" class="card shuffle" id="01" src="cover.jpg"/><div class="desc">運勢</div></li>
-		  <li><input type="image" class="card shuffle" id="02" src="cover.jpg"/><div class="desc">事業</div></li>
-		  <li><input type="image" class="card shuffle" id="03" src="cover.jpg"/><div class="desc">愛情</div></li><br id="new_line">
-		  <li><input type="image" class="card shuffle" id="04" src="cover.jpg"/><div class="desc">人際</div></li>
-		  <li><input type="image" class="card shuffle" id="05" src="cover.jpg"/><div class="desc">金錢</div></li>
+		  <li class="cover"><image class="card shuffle unreveal" id="01" src="cover.jpg"/><div class="desc">運勢</div></li>
+		  <li class="cover"><image class="card shuffle unreveal" id="02" src="cover.jpg"/><div class="desc">事業</div></li>
+		  <li class="cover"><image class="card shuffle unreveal" id="03" src="cover.jpg"/><div class="desc">愛情</div></li><br id="new_line">
+		  <li class="cover"><image class="card shuffle unreveal" id="04" src="cover.jpg"/><div class="desc">人際</div></li>
+		  <li class="cover"><image class="card shuffle unreveal" id="05" src="cover.jpg"/><div class="desc">金錢</div></li>
 	  </div>
     </center>
 	<button id="status" class="loading" onclick="">卡片資料載入中  <i class="fa fa-spinner fa-spin"></i></button>
@@ -39,13 +39,14 @@ var flip = function(e){
     preload_img.src = rand_card[0];
     document.getElementById("status").innerHTML = "抽牌中  <i class='fa fa-spinner fa-spin'></i>";
 	$("#status").removeClass("clickable");
-	$("#"+e.srcElement.id).addClass("card_reveal");
-	$("#"+e.srcElement.id).addClass("rotate");
+	$("#"+e.srcElement.id).removeClass("unreveal");
+	$("#"+e.srcElement.id).parent().addClass("card_reveal");
+	$("#"+e.srcElement.id).parent().addClass("rotate");
     preload_img.onload = function() {
-	    $("#"+e.srcElement.id).removeClass("rotate");
         e.target.src = preload_img.src;
         document.getElementById("status").innerHTML = "重新洗牌";
 		$("#status").addClass("clickable");
+	    $("#"+e.srcElement.id).parent().parent().removeClass("rotate");
     }
     //$("#"+e.srcElement.id).attr("src",rand_card[0]);
     
@@ -74,7 +75,8 @@ function shuffle(){
 		for (var i = 0; i < card_class.length; i++){
 			card_class[i].addEventListener('click', flip, false);
 			card_class[i].src = "cover.jpg";
-			$("#"+card_class[i].id).removeClass("card_reveal");
+	        $("#"+card_class[i].id).addClass("unreveal");
+			$("#"+card_class[i].id).parent().parent().removeClass("card_reveal");
 		} 
 	    $('#camera').addClass("hidden");
 	    document.getElementById('camera').removeEventListener('click', takePicture, false);

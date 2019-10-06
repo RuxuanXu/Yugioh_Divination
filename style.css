@@ -129,25 +129,26 @@ li {
   display: inline-block;
 }
 
+.card_set{
+  perspective: 900px;
+  transform: translateY(-4vmin) scale(1); 
+  transition: .5s all ease;
+}
+
+.cover {
+  transform: rotateX(60deg) scale(0.9); 
+}
+
 .card {
   height:  31.488vmin;
   width: 22.837vmin;
-  transform: rotateX(60deg) scale(0.9); 
   transition: .5s all ease;
   z-index: 1;
   position:relative;
 }
 
-.desc {
-	margin-top: -8vmin;
-	font-size: 4vmin;
-	transform: rotateX(60deg); 
-	opacity: 0.8;
-    transition: .5s all ease;
-}
-
 .card:hover {
-  transform:rotateX(60deg) translateY(15%) scale(0.9);
+  cursor: pointer;
   transition: opacity 1s;
   height:  31.488vmin;
   width: 22.837vmin;
@@ -156,10 +157,12 @@ li {
   position:relative;
 }
 
+.unreveal:hover {
+  transform: translateY(15%);
+  position:relative;
+}
+
 .card_reveal {
-  height:  31.488vmin;
-  width: 22.837vmin;
-  transform: rotateX(60deg) scale(0.9); 
   transition: .5s all ease;
   z-index: 1;
   position:relative;
@@ -167,22 +170,32 @@ li {
 
 .card_reveal:hover {
   cursor: pointer;
-  height:  31.488vmin;
-  width: 22.837vmin;
   transform: rotate(0deg) scale(1.5);
   transition: .5s all ease;
   z-index: 10;
   position:relative;
+  color:transparent;
+}
+
+.desc {
+	font-size: 4vmin; 
+	opacity: 0.8;
+    transform: translateY(1.4vmin);
+    transition: .5s all ease;
 }
 
 .rotate{
   animation: rotate 1s infinite; 
+  transform: scale(1.5);
   position:relative;
   z-index: 10;
+  color:transparent;
 }
 
 @keyframes rotate{
-  to{ transform: rotateY(360deg) scale(1.5);  }
+  0% { transform: rotateX(0deg) rotateY(0deg) scale(1.5);  }
+  50% { transform: rotateX(0deg) rotateY(180deg) scale(1.5);  }
+  100% { transform: rotateX(0deg) rotateY(360deg) scale(1.5);  }
 }
 
 .shuffle{
@@ -193,12 +206,6 @@ li {
   transition: .5s all ease;
   position:relative;
   opacity: 0;
-}
-
-.card_set{
-  perspective: 900px;
-  transform: translateY(-4vmin); 
-  transition: .5s all ease;
 }
 
 #container {
